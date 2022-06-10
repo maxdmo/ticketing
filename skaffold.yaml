@@ -4,15 +4,23 @@ metadata:
   name: ticketing
 build:
   artifacts:
-  - image: maxpotasio/auth
-    context: auth
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: 'src/**/*.ts'
-          dest: .
+    - image: maxpotasio/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: maxpotasio/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
 deploy:
   kubectl:
     manifests:
-    - infra/k8s/*.yaml
+      - infra/k8s/*.yaml
